@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.db
+*.sqlite
+
+# Model weights (large files)
+backend/ml/models/*.pt
+backend/ml/models/*.bin
+backend/ml/models/*.json
+!backend/ml/models/.gitkeep
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# OS
+.DS_Store
+*.log
+tmp/

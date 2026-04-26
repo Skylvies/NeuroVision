@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroVision — Complete Project Documentation</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #0d1117;
+    --card: #161b22;
+    --border: #21262d;
+    --fg: #c9d1d9;
+    --fg-muted: #8b949e;
+    --heading: #f0f6fc;
+    --accent: #58a6ff;
+    --accent2: #a371f7;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  /* Layout */
+  .wrapper { display: flex; min-height: 100vh; }
+  .sidebar {
+    position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+    background: var(--surface); border-right: 1px solid var(--border);
+    overflow-y: auto; padding: 1.5rem 1rem; z-index: 10;
+  }
+  .sidebar h3 {
+    color: var(--accent); font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 0.75rem; padding: 0 0.5rem;
+  }
+  .sidebar a {
+    display: block; color: var(--fg-muted); text-decoration: none;
+    padding: 0.3rem 0.5rem; border-radius: 6px; font-size: 0.85rem;
+    transition: all 0.15s;
+  }
+  .sidebar a:hover { color: var(--heading); background: var(--card); }
+  .sidebar .brand {
+    font-size: 1.1rem; font-weight: 700; color: var(--heading);
+    margin-bottom: 1.5rem; padding: 0 0.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .sidebar .brand span { color: var(--accent); }
+
+  .content { margin-left: 280px; max-width: 900px; padding: 3rem 3rem 6rem; }
+
+  /* Typography */
+  h1 { color: var(--heading); font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: 800; }
+  h1 + blockquote { color: var(--fg-muted); border-left: 3px solid var(--accent2); padding-left: 1rem; margin-bottom: 2rem; font-size: 1.05rem; }
+  h2 {
+    color: var(--heading); font-size: 1.55rem; margin-top: 3rem; margin-bottom: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); font-weight: 700;
+  }
+  h3 { color: var(--accent); font-size: 1.15rem; margin-top: 2rem; margin-bottom: 0.6rem; font-weight: 600; }
+  h4 { color: var(--accent2); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+  strong { color: var(--heading); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  blockquote { border-left: 3px solid var(--border); padding-left: 1rem; color: var(--fg-muted); margin-bottom: 1rem; }
+
+  /* Code */
+  code {
+    background: var(--card); color: #e6edf3; padding: 0.15em 0.4em;
+    border-radius: 5px; font-size: 0.88em;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  pre {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.1rem 1.3rem; overflow-x: auto;
+    margin-bottom: 1.2rem;
+  }
+  pre code { background: none; padding: 0; font-size: 0.85em; line-height: 1.6; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 1.3rem; font-size: 0.92rem; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.85rem; text-align: left; }
+  th { background: var(--card); color: var(--heading); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  tr:nth-child(even) { background: rgba(22, 27, 34, 0.4); }
+
+  /* Lists */
+  ul, ol { margin-bottom: 1rem; padding-left: 1.6rem; }
+  li { margin-bottom: 0.25rem; }
+  li code { font-size: 0.85em; }
+
+  /* KaTeX */
+  .katex-display { margin: 1.3rem 0; overflow-x: auto; overflow-y: hidden; }
+  .katex { font-size: 1.1em; color: #e6edf3; }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .content { margin-left: 0; padding: 2rem 1.5rem; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <nav class="sidebar" id="sidebar">
+    <div class="brand"><span>&#9673;</span> NeuroVision Docs</div>
+    <h3>Sections</h3>
+    <!-- populated by JS -->
+  </nav>
+  <main class="content" id="content"></main>
+</div>
+<script>
+// Inline the markdown content
+const md = `PLACEHOLDER`;
+
+async function main() {
+  // Fetch the .md file next to this .html
+  let src = md;
+  try {
+    const resp = await fetch('neurovision-complete-documentation.md');
+    if (resp.ok) src = await resp.text();
+  } catch(e) {}
+
+  // Render markdown
+  const html = marked.parse(src);
+  document.getElementById('content').innerHTML = html;
+
+  // Render LaTeX
+  renderMathInElement(document.getElementById('content'), {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false}
+    ],
+    throwOnError: false
+  });
+
+  // Build sidebar ToC from h2 elements
+  const sidebar = document.getElementById('sidebar');
+  const headings = document.querySelectorAll('#content h2');
+  headings.forEach((h, i) => {
+    if (!h.id) h.id = 'section-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.replace(/^[\d]+\.\s*/, '');
+    sidebar.appendChild(a);
+  });
+}
+main();
+</script>
+</body>
+</html>

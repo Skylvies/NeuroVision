@@ -1,0 +1,30 @@
+version: "3.3"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "127.0.0.1:18503:18500"
+    environment:
+      - CORS_ORIGINS=["https://141.148.219.124.nip.io","http://localhost:18502"]
+      - DATABASE_URL=sqlite+aiosqlite:///./neurovision.db
+      - MODEL_PATH=ml/models/neurovision_bilstm.pt
+      - MAX_UPLOAD_MB=200
+    volumes:
+      - backend-data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: https://141.148.219.124.nip.io
+    ports:
+      - "127.0.0.1:18502:18501"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend-data:
